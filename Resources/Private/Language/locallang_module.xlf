@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns:t3="http://typo3.org/schemas/xliff">
+	<file t3:id="1568745079" source-language="en" datatype="plaintext" original="messages" date="2019-09-17T20:31:50Z" product-name="sitetools">
+		<header/>
+		<body>
+			<trans-unit id="mlang_labels_tablabel">
+				<source>Site Tools</source>
+			</trans-unit>
+			<trans-unit id="mlang_labels_tabdescr">
+				<source>This is a wizard to create route enhancer configuration for plugins.</source>
+			</trans-unit>
+			<trans-unit id="mlang_tabs_tab">
+				<source>Tools</source>
+			</trans-unit>
+
+			<trans-unit id="heading_text">
+				<source>Site Tools</source>
+			</trans-unit>
+			<trans-unit id="overview">
+				<source>Overview</source>
+			</trans-unit>
+			<trans-unit id="overview_description">
+				<source>Overview</source>
+			</trans-unit>
+			<trans-unit id="routeEnhancerGenerator">
+				<source>Route Enhancer Generator</source>
+			</trans-unit>
+			<trans-unit id="routeEnhancerGenerator_description">
+				<source>Route Enhancer Generator</source>
+			</trans-unit>
+
+
+			<trans-unit id="select_plugin">
+				<source>- select plugin -</source>
+			</trans-unit>
+			<trans-unit id="select_plugin_description">
+				<source>Please select a plugin in the dropdown above.</source>
+			</trans-unit>
+			<trans-unit id="no_plugins">
+				<source>- no plugins -</source>
+			</trans-unit>
+			<trans-unit id="no_plugins_description">
+				<source>No plugins were found on this system.</source>
+			</trans-unit>
+			<trans-unit id="source_host_global_text1">
+				<source>Global redirect (any domain)</source>
+			</trans-unit>
+
+
+			<trans-unit id="source_host_global_text">
+				<source>Global redirect (any domain)</source>
+			</trans-unit>
+
+			<trans-unit id="redirect_add_text">
+				<source>Add redirect</source>
+			</trans-unit>
+			<trans-unit id="redirect_not_found.title">
+				<source>No redirects found!</source>
+			</trans-unit>
+			<trans-unit id="redirect_not_found.message">
+				<source>There are currently no redirect records found in the database.</source>
+			</trans-unit>
+			<trans-unit id="redirect_create">
+				<source>Create new redirect</source>
+			</trans-unit>
+
+			<trans-unit id="redirect_not_found_with_filter.title">
+				<source>No redirects found!</source>
+			</trans-unit>
+			<trans-unit id="redirect_not_found_with_filter.message">
+				<source>With the current set of filters applied, no redirect could be found.</source>
+			</trans-unit>
+			<trans-unit id="redirect_no_filter">
+				<source>Remove all filter</source>
+			</trans-unit>
+			<trans-unit id="filter.source_host.showAll">
+				<source>Show All</source>
+			</trans-unit>
+			<trans-unit id="filter.destination">
+				<source>Destination (Path or Page ID)</source>
+			</trans-unit>
+			<trans-unit id="filter.targetStatusCode">
+				<source>Status Code</source>
+			</trans-unit>
+			<trans-unit id="filter.sendButton">
+				<source>Send</source>
+			</trans-unit>
+
+			<trans-unit id="record_disabled">
+				<source>Redirect is not activated!</source>
+			</trans-unit>
+			<trans-unit id="source_host">
+				<source>Source Host</source>
+			</trans-unit>
+			<trans-unit id="source_path">
+				<source>Source Path</source>
+			</trans-unit>
+			<trans-unit id="source_path.placeholder">
+				<source>/my-path/ or #^/my-path/$# (when regex enabled)</source>
+			</trans-unit>
+			<trans-unit id="destination">
+				<source>Destination</source>
+			</trans-unit>
+			<trans-unit id="pageID">
+				<source>Page ID</source>
+			</trans-unit>
+			<trans-unit id="destination_status_code">
+				<source>Status Code</source>
+			</trans-unit>
+			<trans-unit id="hits">
+				<source>Hits</source>
+			</trans-unit>
+			<trans-unit id="hit_text">
+				<source>%s hit</source>
+			</trans-unit>
+			<trans-unit id="hits_text">
+				<source>%s hits</source>
+			</trans-unit>
+			<trans-unit id="hit_reset">
+				<source>Reset Hit Counter (!)</source>
+			</trans-unit>
+			<trans-unit id="hit_reset.confirm.title">
+				<source>Reset the hitcounter of this record?</source>
+			</trans-unit>
+			<trans-unit id="hit_reset.confirm.content">
+				<source>Are you sure you want to reset the hitcounter of this record?</source>
+			</trans-unit>
+			<trans-unit id="hit_last">
+				<source>Last Hit on</source>
+			</trans-unit>
+			<trans-unit id="hit_last_never">
+				<source>Never</source>
+			</trans-unit>
+			<trans-unit id="visit_destination">
+				<source>Go to</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

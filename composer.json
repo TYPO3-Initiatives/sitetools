@@ -1,0 +1,49 @@
+{
+	"name": "typo3/cms-sitetools",
+	"type": "typo3-cms-framework",
+	"description": "Create route configurations for your plugins.",
+	"homepage": "https://typo3.org",
+	"license": ["GPL-2.0-or-later"],
+	"authors": [{
+		"name": "TYPO3 Core Team",
+		"email": "typo3cms@typo3.org",
+		"role": "Developer"
+	}],
+	"config": {
+		"sort-packages": true
+	},
+	"require": {
+		"typo3/cms-backend": "10.1.*@dev",
+		"typo3/cms-core": "10.1.*@dev",
+		"typo3fluid/fluid": "^2.6.1"
+	},
+	"conflict": {
+		"typo3/cms": "*"
+	},
+	"replace": {
+		"sitetools": "*"
+	},
+	"suggest": {
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "10.1.x-dev"
+		},
+		"typo3/cms": {
+			"extension-key": "sitetools",
+			"Package": {
+				"partOfFactoryDefault": true
+			}
+		}
+	},
+	"autoload": {
+		"psr-4": {
+			"TYPO3\\CMS\\SiteTools\\": "Classes/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"TYPO3\\CMS\\SiteTools\\Tests\\": "Tests/"
+		}
+	}
+}

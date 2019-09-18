@@ -1,0 +1,24 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:rd="http://typo3.org/ns/TYPO3/CMS/Redirects/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="headline">
+    <h1><f:translate key="LLL:EXT:sitetools/Resources/Private/Language/locallang_module.xlf:heading_text"/></h1>
+</f:section>
+
+<f:section name="content">
+
+    <dl class="t3-overview-list">
+        <f:for each="{availableFunctions}" as="url" key="name">
+            <dt>
+                <a href="{url}">
+                    <img src="sysext/lowlevel/Resources/Public/Icons/module-dbint.svg" width="16" height="16" title="{f:translate(key: name)}" alt="{f:translate(key: name)}" /> {f:translate(key: name)}
+                </a></dt>
+            <dd>{f:translate(key:'{name}_description')}</dd>
+        </f:for>
+    </dl>
+
+</f:section>
+</html>

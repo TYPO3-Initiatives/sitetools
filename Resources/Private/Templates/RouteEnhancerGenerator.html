@@ -1,0 +1,28 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+    xmlns:rd="http://typo3.org/ns/TYPO3/CMS/Redirects/ViewHelpers"
+    xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+    data-namespace-typo3-fluid="true">
+<f:layout name="Default" />
+
+<f:section name="headline">
+    <h1><f:translate key="LLL:EXT:sitetools/Resources/Private/Language/locallang_module.xlf:routeEnhancerGenerator"/></h1>
+</f:section>
+
+<f:section name="content">
+    <f:if condition="!{pluginSelected}">
+        <f:then>
+            <p><f:translate key="LLL:EXT:sitetools/Resources/Private/Language/locallang_module.xlf:select_plugin_description"/></p>
+        </f:then>
+        <f:else>
+            <h2>Extension:</h2>
+            <p>{extension}</p>
+            <h2>Plugin:</h2>
+            <p>{plugin}</p>
+            <h2>Actions:</h2>
+            <p><f:format.nl2br>{information}</f:format.nl2br></p>
+            <pre>{configuration}</pre>
+        </f:else>
+    </f:if>
+</f:section>
+
+</html>
