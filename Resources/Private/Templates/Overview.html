@@ -9,16 +9,15 @@
 </f:section>
 
 <f:section name="content">
-
     <dl class="t3-overview-list">
         <f:for each="{availableFunctions}" as="url" key="name">
             <dt>
                 <a href="{url}">
-                    <img src="sysext/lowlevel/Resources/Public/Icons/module-dbint.svg" width="16" height="16" title="{f:translate(key: name)}" alt="{f:translate(key: name)}" /> {f:translate(key: name)}
-                </a></dt>
+                    <f:img src="EXT:sitetools/Resources/Public/Icons/Extension.svg" width="16" height="16" title="{f:translate(key: name)}" alt="{f:translate(key: name)}" /> {f:translate(key: name)}
+                </a>
+            </dt>
             <dd>{f:translate(key:'{name}_description')}</dd>
         </f:for>
     </dl>
-
 </f:section>
 </html>

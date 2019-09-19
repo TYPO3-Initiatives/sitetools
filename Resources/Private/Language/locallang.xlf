@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.0" xmlns:t3="http://typo3.org/schemas/xliff">
-	<file t3:id="1568745079" source-language="en" datatype="plaintext" original="messages" date="2019-09-17T20:31:50Z" product-name="sitetools">
+	<file t3:id="1568831629" source-language="en" datatype="plaintext" original="messages" date="2019-09-18T20:33:15Z" product-name="sitetools">
 		<header/>
 		<body>
-			<trans-unit id="mlang_labels_tablabel">
-				<source>Site Tools</source>
-			</trans-unit>
-			<trans-unit id="mlang_labels_tabdescr">
-				<source>Tools for building sites faster with TYPO3.</source>
-			</trans-unit>
-			<trans-unit id="mlang_tabs_tab">
-				<source>Tools</source>
-			</trans-unit>
-
 			<trans-unit id="heading_text">
 				<source>Site Tools</source>
 			</trans-unit>

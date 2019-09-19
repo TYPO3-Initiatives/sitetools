@@ -31,7 +31,7 @@ use TYPO3\CMS\SiteTools\Utility\SiteToolsUtility;
 use TYPO3Fluid\Fluid\View\ViewInterface;
 
 /**
- * Creates route enhancer configurations for a selected plugin
+ * ToolsController
  * @internal This class is a specific TYPO3 Backend controller implementation and is not part of the Public TYPO3 API.
  */
 class ToolsController
@@ -71,10 +71,9 @@ class ToolsController
     protected $uriBuilder;
 
     /**
-     * The tools menu items array. Each key represents a key for which values
-     * can range between the items in the array of that key.
+     * The tools registry array.
      *
-     * @see setupToolsMenu()
+     * @see setupActions()
      * @var array
      */
     protected $tools = [
@@ -93,21 +92,19 @@ class ToolsController
         $this->moduleTemplate->getPageRenderer()->loadRequireJsModule('TYPO3/CMS/Backend/Modal');
         $this->iconFactory = GeneralUtility::makeInstance(IconFactory::class);
         $this->uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
-        $this->setupToolsMenu();
+        $this->setupActions();
     }
 
     /**
-     * Injects the request object for the current request, and renders the overview of all redirects
+     * Injects the request object for the current request, and renders the overview of all redirects.
      *
      * @param ServerRequestInterface $request the current request
      * @return ResponseInterface the response with the content
      */
     public function handleRequest(ServerRequestInterface $request): ResponseInterface
     {
-        $this->getLanguageService()->includeLLFile(
-            'EXT:sitetools/Resources/Private/Language/locallang_module.xlf'
-        );
         $this->request = $request;
+
         $action = $this->getSelectedAction();
         $this->initializeView($action);
         $this->getToolsMenu();
@@ -122,32 +119,69 @@ class ToolsController
     }
 
     /**
-     * Show all available actions
+     * Register action in the tools registry.
+     */
+    protected function registerAction(string $actionName, string $iconName = null): void
+    {
+        $this->tools['actions'][$action] = [
+            'title' => htmlspecialchars($this->getLanguageService()->getLL($action)),
+            'description' => htmlspecialchars($this->getLanguageService()->getLL($action . '_description')),
+            'icon' => $this->iconFactory->getIcon($iconName, Icon::SIZE_SMALL)
+        ];
+
+        if (!empty($iconName)) {
+            $this->tools['actions'][$action]['icon'] = $this->iconFactory->getIcon($iconName, Icon::SIZE_SMALL);
+        } else {
+            $this->tools['actions'][$action]['icon'] = $this->iconFactory->getIcon('', Icon::SIZE_SMALL);
+        }
+    }
+
+    /**
+     * Register all available actions.
+     */
+    protected function setupActions()
+    {
+        $this->registerAction('overview');
+        $this->registerAction('generateRouteEnhancer');
+    }
+
+    /**
+     * Register all available actions.
+     */
+    protected function buildUriFromRoute(string $action, array $options): string
+    {
+        return (string)$this->uriBuilder->buildUriFromRoute(
+            $this->moduleName,
+            array_merge(
+                ['action' => $action],
+                $options
+            )
+        );
+    }
+
+    /**
+     * Show all available actions.
      * @param ServerRequestInterface $request
      */
     protected function overviewAction(ServerRequestInterface $request)
     {
-        $modules = [];
-        foreach ($this->tools['actions'] as $controller => $title) {
-            if ($controller == 'overview') {
+        $actions = [];
+        foreach ($this->tools['actions'] as $action => $properties) {
+            if ($action == 'overview') {
                 continue;
             }
 
-            $modules[$controller] = (string)$this->uriBuilder->buildUriFromRoute(
-                $this->moduleName,
-                [
-                    'action' => $controller
-                ]
-            );
+            $actions[$action] = $properties;
+            $actions[$action]['uri'] = $this->buildUriFromRoute($action);
         }
-        $this->view->assign('availableFunctions', $modules);
+        $this->view->assign('actions', $actions);
     }
 
     /**
-     * Show all available actions
+     * Generate route enhancer configuration.
      * @param ServerRequestInterface $request
      */
-    protected function routeEnhancerGeneratorAction(ServerRequestInterface $request)
+    protected function generateRouteEnhancerAction(ServerRequestInterface $request)
     {
         $this->getPluginMenu();
 
@@ -160,21 +194,6 @@ class ToolsController
             ['pluginSelected' => !empty($extensionName) && !empty($pluginName)],
             $routeEnhancer
         ));
-    }
-
-    /**
-     * Create tools menu
-     */
-    protected function setupToolsMenu()
-    {
-        $this->tools = [
-            'actions' => [
-                'overview' => htmlspecialchars($this->getLanguageService()->getLL('overview')),
-                'routeEnhancerGenerator' => htmlspecialchars(
-                    $this->getLanguageService()->getLL('routeEnhancerGenerator')
-                )
-            ]
-        ];
     }
 
     /**
@@ -198,18 +217,13 @@ class ToolsController
         $menu = $menuRegistry->makeMenu();
         $menu->setIdentifier('actions');
 
-        foreach ($this->tools['actions'] as $controller => $title) {
+        foreach ($this->tools['actions'] as $action => $properties) {
             $menuItem = $menu
                 ->makeMenuItem()
-                ->setHref((string)$this->uriBuilder->buildUriFromRoute(
-                    $this->moduleName,
-                    [
-                        'action' => $controller
-                    ]
-                ))
-                ->setTitle($title);
+                ->setHref($this->buildUriFromRoute($action))
+                ->setTitle($properties['title']);
 
-            if ($this->getSelectedAction() === $controller) {
+            if ($this->getSelectedAction() === $action) {
                 $menuItem->setActive(true);
             }
 
@@ -261,12 +275,7 @@ class ToolsController
             // Add select item
             $menuItem = $menu
                 ->makeMenuItem()
-                ->setHref((string)$this->uriBuilder->buildUriFromRoute(
-                    $this->moduleName,
-                    [
-                        'action' => $this->getSelectedAction()
-                    ]
-                ))
+                ->setHref($this->buildUriFromRoute($this->getSelectedAction()))
                 ->setTitle($this->getLanguageService()->sL(
                     'LLL:EXT:sitetools/Resources/Private/Language/locallang_module.xlf:select_plugin'
                 ));
@@ -279,15 +288,13 @@ class ToolsController
                 }
 
                 foreach ($extensionConfig['plugins'] as $pluginName => $pluginConfig) {
-                    //$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['extbase']['extensions'][$extensionName]['plugins'][$pluginName] = [];
                     $pluginSignature = strtolower($extensionName . '_' . $pluginName);
 
                     $menuItem = $menu
                         ->makeMenuItem()
-                        ->setHref((string)$this->uriBuilder->buildUriFromRoute(
-                            $this->moduleName,
+                        ->setHref($this->buildUriFromRoute(
+                            $this->getSelectedAction(),
                             [
-                                'action' => $this->getSelectedAction(),
                                 'extension' => $extensionName,
                                 'plugin' => $pluginName
                             ]
@@ -306,17 +313,13 @@ class ToolsController
             // Add no plugins item
             $menuItem = $menu
                 ->makeMenuItem()
-                ->setHref((string)$this->uriBuilder->buildUriFromRoute(
-                    $this->moduleName,
-                    [
-                        'action' => $this->getSelectedAction()
-                    ]
-                ))
+                ->setHref($this->buildUriFromRoute($this->getSelectedAction()))
                 ->setTitle($this->getLanguageService()->sL(
                     'LLL:EXT:sitetools/Resources/Private/Language/locallang_module.xlf:no_plugins'
                 ));
             $menu->addMenuItem($menuItem);
         }
+
         $menuRegistry->addMenu($menu);
     }
 

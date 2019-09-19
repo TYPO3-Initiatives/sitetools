@@ -1,49 +1,104 @@
 {
-	"name": "typo3/cms-sitetools",
-	"type": "typo3-cms-framework",
-	"description": "Create route configurations for your plugins.",
-	"homepage": "https://typo3.org",
-	"license": ["GPL-2.0-or-later"],
-	"authors": [{
-		"name": "TYPO3 Core Team",
-		"email": "typo3cms@typo3.org",
-		"role": "Developer"
-	}],
-	"config": {
-		"sort-packages": true
-	},
-	"require": {
-		"typo3/cms-backend": "10.1.*@dev",
-		"typo3/cms-core": "10.1.*@dev",
-		"typo3fluid/fluid": "^2.6.1"
-	},
-	"conflict": {
-		"typo3/cms": "*"
-	},
-	"replace": {
-		"sitetools": "*"
-	},
-	"suggest": {
-	},
-	"extra": {
-		"branch-alias": {
-			"dev-master": "10.1.x-dev"
-		},
-		"typo3/cms": {
-			"extension-key": "sitetools",
-			"Package": {
-				"partOfFactoryDefault": true
-			}
-		}
-	},
-	"autoload": {
-		"psr-4": {
-			"TYPO3\\CMS\\SiteTools\\": "Classes/"
-		}
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"TYPO3\\CMS\\SiteTools\\Tests\\": "Tests/"
-		}
-	}
+    "name": "typo3/sitetools",
+    "description": "Tools for building sites faster with TYPO3.",
+    "type": "typo3-cms-extension",
+    "keywords": [
+        "TYPO3 CMS",
+        "site tools",
+        "site",
+        "tool"
+    ],
+    "homepage": "https://github.com/TYPO3-Initiatives/sitetools",
+    "license": ["GPL-2.0-or-later"],
+    "readme": "README.md",
+    "authors": [
+        {
+            "name": "Simon Gilli",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/TYPO3-Initiatives/sitetools/issues",
+        "chat": "https://typo3.slack.com/messages/CN64ZUDA7"
+    },
+    "require": {
+        "php": "^7.2",
+        "psr/http-message": "^1.0",
+        "symfony/console": "^4.1",
+        "symfony/yaml": "^4.1",
+        "typo3/cms-backend": "^9.5 || ~10.0.0 || 10.0.*@dev || 10.1.*@dev",
+        "typo3/cms-core": "^9.5 || ~10.0.0 || 10.0.*@dev || 10.1.*@dev",
+        "typo3/cms-fluid": "^9.5 || ~10.0.0 || 10.0.*@dev || 10.1.*@dev",
+        "typo3fluid/fluid": "^2.5.2"
+    },
+    "require-dev": {
+        "bk2k/extension-helper": "dev-Composer-command-support",
+        "friendsofphp/php-cs-fixer": "^2.12.2",
+        "typo3/testing-framework": "^4.9 || ^5.0"
+    },
+    "replace": {
+        "typo3-ter/sitetools": "self.version"
+    },
+    "suggest": {
+    },
+    "autoload": {
+        "psr-4": {
+            "TYPO3\\CMS\\SiteTools\\": "Classes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TYPO3\\CMS\\SiteTools\\Tests\\": "Tests/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/gstypo3/extension-helper.git"
+        }
+    ],
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "bin-dir": ".build/bin",
+        "vendor-dir": ".build/vendor"
+    },
+    "scripts": {
+        "test:php:lint": [
+            "phplint"
+        ],
+        "test:php:unit": [
+            "phpunit -c Build/phpunit.xml"
+        ],
+        "test": [
+            "@test:php:lint",
+            "@test:php:unit"
+        ],
+        "cgl": [
+            "php-cs-fixer --diff -v fix"
+        ],
+        "set-version": [
+            "extension-helper version:set"
+        ],
+        "changelog": [
+            "extension-helper changelog:create"
+        ],
+        "post-autoload-dump": [
+            "mkdir -p .build/web/typo3conf/ext/",
+            "[ -L .build/web/typo3conf/ext/sitetools ] || ln -snvf ../../../../. .build/web/typo3conf/ext/sitetools"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.0.x-dev"
+        },
+        "typo3/cms": {
+            "extension-key": "sitetools",
+            "app-dir": ".build",
+            "web-dir": ".build/web"
+        }
+    },
+    "archive": {
+        "exclude": ["/foo/bar", "baz", "/*.test", "!/foo/bar/baz"]
+    }
 }
